@@ -209,6 +209,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
     <div class="topbar-brand">⚡ BrainVisions India</div>
     <div class="topbar-pw"><div class="topbar-pf" id="topPF" style="width:0%"></div></div>
     <div class="topbar-lbl" id="topLbl">0 / 4 done</div>
+    <button id="musicBtn" onclick="toggleMusic()" title="Toggle background music" style="display:flex;align-items:center;gap:6px;background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);border-radius:100px;padding:5px 13px;color:#ff6b35;font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;"><span id="musicIcon">🎵</span><span id="musicLabel">Music Off</span></button>
   </div>
   <div class="chapter-tabs" id="chapterTabs"></div>
   <div id="lessonsWrap"></div>
@@ -843,6 +844,176 @@ function restartAll(){
   showLesson(0);refreshTabs();updateProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// ══════ BACKGROUND MUSIC ENGINE — Clean Ambient ══════
+let actx = null;
+let musicOn = false;
+let masterVol = null;
+let allOscs = [];
+let scheduleTimer = null;
+
+// Gentle Cmaj9 → Am9 → Fmaj9 → Gsus4 loop — airy, clean, no distortion
+const PROG = [
+  { root: 261.63, freqs: [261.63, 329.63, 392.00, 440.00, 523.25] }, // Cmaj9
+  { root: 220.00, freqs: [220.00, 261.63, 329.63, 392.00, 493.88] }, // Am9
+  { root: 174.61, freqs: [174.61, 220.00, 261.63, 349.23, 440.00] }, // Fmaj9
+  { root: 196.00, freqs: [196.00, 246.94, 293.66, 392.00, 523.25] }, // Gsus4
+];
+let progIdx = 0;
+
+function initAudioCtx() {
+  if (actx) return;
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+  masterVol = actx.createGain();
+  masterVol.gain.value = 0;
+
+  // Compressor to prevent any clipping / harshness
+  const comp = actx.createDynamicsCompressor();
+  comp.threshold.value = -24;
+  comp.knee.value = 30;
+  comp.ratio.value = 4;
+  comp.attack.value = 0.1;
+  comp.release.value = 0.4;
+
+  // Global low-pass — removes all harsh highs
+  const lpf = actx.createBiquadFilter();
+  lpf.type = 'lowpass';
+  lpf.frequency.value = 700;
+  lpf.Q.value = 0.5;
+
+  masterVol.connect(lpf);
+  lpf.connect(comp);
+  comp.connect(actx.destination);
+}
+
+// Create one soft sine note with smooth attack/release
+function makeSineNote(freq, gainAmt, startTime, duration) {
+  const osc = actx.createOscillator();
+  const g = actx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  // Tiny detune for warmth without harshness
+  osc.detune.value = (Math.random() - 0.5) * 3;
+  g.gain.setValueAtTime(0, startTime);
+  g.gain.linearRampToValueAtTime(gainAmt, startTime + 2.0);        // slow fade-in
+  g.gain.setValueAtTime(gainAmt, startTime + duration - 2.0);
+  g.gain.linearRampToValueAtTime(0, startTime + duration);          // slow fade-out
+  osc.connect(g);
+  g.connect(masterVol);
+  osc.start(startTime);
+  osc.stop(startTime + duration);
+  allOscs.push(osc);
+}
+
+// Pluck a very soft high note for subtle melody
+function makePluck(freq, startTime) {
+  const osc = actx.createOscillator();
+  const g = actx.createGain();
+  const lpf = actx.createBiquadFilter();
+  lpf.type = 'lowpass';
+  lpf.frequency.value = 900;
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  g.gain.setValueAtTime(0, startTime);
+  g.gain.linearRampToValueAtTime(0.022, startTime + 0.04);
+  g.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.2);
+  osc.connect(lpf);
+  lpf.connect(g);
+  g.connect(masterVol);
+  osc.start(startTime);
+  osc.stop(startTime + 2.5);
+  allOscs.push(osc);
+}
+
+const MELODY = [523.25, 587.33, 523.25, 493.88, 440.00, 493.88, 523.25, 587.33,
+                659.25, 587.33, 523.25, 493.88, 440.00, 392.00, 440.00, 493.88];
+let melodyStep = 0;
+
+function scheduleChord() {
+  if (!musicOn) return;
+  const now = actx.currentTime;
+  const chord = PROG[progIdx % PROG.length];
+  progIdx++;
+
+  // Root bass — low, very soft
+  makeSineNote(chord.root / 2, 0.045, now, 7.5);
+
+  // Pad tones — each frequency very quiet, pure sine
+  chord.freqs.forEach((f, i) => {
+    makeSineNote(f, 0.028 - i * 0.003, now + i * 0.15, 7.5);
+  });
+
+  // Gentle melody pluck every other chord
+  if (progIdx % 2 === 0) {
+    for (let i = 0; i < 3; i++) {
+      const mf = MELODY[melodyStep % MELODY.length];
+      melodyStep++;
+      makePluck(mf, now + i * 1.8 + 0.5);
+    }
+  }
+
+  scheduleTimer = setTimeout(scheduleChord, 7000);
+}
+
+function startMusic() {
+  initAudioCtx();
+  if (actx.state === 'suspended') actx.resume();
+  musicOn = true;
+  allOscs = [];
+  melodyStep = 0;
+  progIdx = 0;
+
+  // Gentle master fade-in over 3 seconds
+  masterVol.gain.cancelScheduledValues(actx.currentTime);
+  masterVol.gain.setValueAtTime(0, actx.currentTime);
+  masterVol.gain.linearRampToValueAtTime(0.9, actx.currentTime + 3.0);
+
+  scheduleChord();
+  setMusicBtnState(true);
+}
+
+function stopMusic() {
+  musicOn = false;
+  clearTimeout(scheduleTimer);
+
+  if (masterVol) {
+    masterVol.gain.cancelScheduledValues(actx.currentTime);
+    masterVol.gain.setValueAtTime(masterVol.gain.value, actx.currentTime);
+    masterVol.gain.linearRampToValueAtTime(0, actx.currentTime + 2.0);
+  }
+  setTimeout(() => {
+    allOscs.forEach(o => { try { o.stop(); } catch(e){} });
+    allOscs = [];
+  }, 2500);
+  setMusicBtnState(false);
+}
+
+function toggleMusic() {
+  musicOn ? stopMusic() : startMusic();
+}
+
+function setMusicBtnState(on) {
+  const btn = document.getElementById('musicBtn');
+  document.getElementById('musicIcon').textContent = on ? '🔊' : '🎵';
+  document.getElementById('musicLabel').textContent = on ? 'Music On' : 'Music Off';
+  btn.style.background = on ? 'rgba(255,107,53,.25)' : 'rgba(255,107,53,.12)';
+  btn.style.borderColor = on ? 'rgba(255,107,53,.6)' : 'rgba(255,107,53,.3)';
+}
+
+// Auto-start music when video plays
+const _origPlay = play;
+play = function(ci) {
+  _origPlay(ci);
+  if (!musicOn) startMusic();
+};
+
+// Auto-stop music when course completes
+const _origFinish = finishChapter;
+finishChapter = function(ci) {
+  _origFinish(ci);
+  if (ci >= CHAPTERS.length - 1) stopMusic();
+};
+
 </script>
 </body>
 </html>
