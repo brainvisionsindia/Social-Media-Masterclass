@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrainVisions India – Social Media Masterclass</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07080f;
+  --card: #0e1120;
+  --surface: #151929;
+  --border: rgba(255,255,255,0.07);
+  --text: #e2e8f0;
+  --muted: #6b7a99;
+  --orange: #ff6b35;
+  --blue: #3b82f6;
+  --pink: #e1306c;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --gold: #f59e0b;
+  --green: #10b981;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;position:relative;overflow:hidden;}
+.hero-aurora{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 20%,rgba(59,130,246,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(139,92,246,.14) 0%,transparent 60%),radial-gradient(ellipse 40% 35% at 60% 10%,rgba(255,107,53,.1) 0%,transparent 50%);animation:aurora 8s ease-in-out infinite alternate;}
+@keyframes aurora{0%{filter:hue-rotate(0deg) brightness(1);}100%{filter:hue-rotate(20deg) brightness(1.1);}}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px;}
+.hero-content{position:relative;z-index:1;max-width:860px;}
+.brand-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);border-radius:100px;padding:6px 18px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:28px;animation:su .7s ease both;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+@keyframes su{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fi{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pi{from{opacity:0;transform:scale(.8);}to{opacity:1;transform:scale(1);}}
+@keyframes si{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:900;line-height:1.0;margin-bottom:20px;animation:su .7s .1s ease both;}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--orange) 0%,var(--pink) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-lead{font-size:1.1rem;color:var(--muted);max-width:560px;margin:0 auto 40px;line-height:1.8;animation:su .7s .2s ease both;}
+.chapter-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:44px;animation:su .7s .3s ease both;}
+.chapter-pill{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid;}
+.hero-cta{display:inline-flex;align-items:center;gap:12px;background:var(--orange);color:#fff;font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;padding:16px 40px;border-radius:100px;border:none;cursor:pointer;box-shadow:0 0 50px rgba(255,107,53,.45);transition:all .3s;animation:su .7s .4s ease both;}
+.hero-cta:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 70px rgba(255,107,53,.65);}
+.hero-cta svg{transition:transform .3s;}.hero-cta:hover svg{transform:translateX(5px);}
+
+/* APP */
+.app{display:none;max-width:1100px;margin:0 auto;padding:0 20px 80px;}
+.app.on{display:block;}
+.topbar{position:sticky;top:0;z-index:200;background:rgba(7,8,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 20px;margin:0 -20px;display:flex;align-items:center;gap:16px;}
+.topbar-brand{font-size:.8rem;font-weight:800;color:var(--orange);white-space:nowrap;letter-spacing:.5px;}
+.topbar-pw{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+.topbar-pf{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange),var(--pink));border-radius:99px;transition:width .6s ease;}
+.topbar-lbl{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);white-space:nowrap;}
+.chapter-tabs{display:flex;gap:8px;padding:28px 0 20px;overflow-x:auto;scrollbar-width:none;flex-wrap:wrap;}
+.ctab{display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Sora',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ctab.active{border-color:var(--orange);background:rgba(255,107,53,.1);color:var(--orange);}
+.ctab.done{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.08);color:var(--green);}
+.ctab-n{width:18px;height:18px;border-radius:50%;background:currentColor;color:var(--bg);font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;}
+
+/* LESSON */
+.lesson{display:none;animation:fi .4s ease;}
+.lesson.on{display:block;}
+
+/* PLAYER */
+.player-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:28px;box-shadow:0 24px 80px rgba(0,0,0,.5);}
+.player-title-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);}
+.pdots{display:flex;gap:6px;}.pd{width:10px;height:10px;border-radius:50%;}
+.pd1{background:#ff5f56;}.pd2{background:#ffbd2e;}.pd3{background:#27c93f;}
+.player-title-text{font-size:.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace;flex:1;text-align:center;}
+
+/* VIDEO STAGE */
+.video-stage{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;cursor:pointer;}
+.vs-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5% 8%;opacity:0;transition:opacity .5s ease;pointer-events:none;}
+.vs-slide.active{opacity:1;pointer-events:auto;}
+.vs-slide::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.sl-insta{background:linear-gradient(135deg,#0d0010 0%,#1a0025 50%,#0d0010 100%);}
+.sl-yt{background:linear-gradient(135deg,#0d0000 0%,#200000 60%,#0d0000 100%);}
+.sl-vid{background:linear-gradient(135deg,#070014 0%,#130028 60%,#07000d 100%);}
+.sl-pptx{background:linear-gradient(135deg,#07060d 0%,#1a1200 60%,#07060d 100%);}
+
+/* Slide components */
+.sc-badge{font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;border:1px solid;margin-bottom:14px;animation:pi .5s .1s both;}
+.sc-h1{font-size:clamp(1.3rem,4vw,2.8rem);font-weight:900;text-align:center;line-height:1.1;margin-bottom:10px;animation:si .6s .2s both;}
+.sc-sub{font-size:clamp(.72rem,1.8vw,.95rem);color:rgba(255,255,255,.5);text-align:center;line-height:1.6;max-width:600px;animation:si .6s .35s both;}
+.sc-stats{display:flex;gap:clamp(8px,2vw,20px);animation:si .6s .4s both;}
+.sc-stat{text-align:center;padding:10px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;}
+.sc-stat-n{font-size:clamp(1.1rem,3vw,1.9rem);font-weight:900;}
+.sc-stat-l{font-size:clamp(.48rem,1.1vw,.65rem);color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.sc-steps{display:flex;flex-direction:column;gap:7px;width:100%;max-width:680px;animation:si .6s .25s both;}
+.sc-step{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:9px 14px;animation:si .5s both;}
+.sc-step-n{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;flex-shrink:0;color:#000;}
+.sc-step-t{font-size:clamp(.65rem,1.5vw,.85rem);color:rgba(255,255,255,.85);font-weight:500;line-height:1.4;}
+.sc-2col{display:flex;gap:clamp(10px,2.5vw,28px);align-items:flex-start;width:100%;max-width:780px;animation:si .6s .2s both;}
+.sc-col{flex:1;}
+.sc-col-t{font-size:clamp(.65rem,1.4vw,.82rem);font-weight:700;margin-bottom:7px;}
+.sc-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.sc-list li{font-size:clamp(.58rem,1.2vw,.74rem);color:rgba(255,255,255,.7);padding:5px 9px;background:rgba(255,255,255,.04);border-radius:6px;border-left:2px solid;line-height:1.4;}
+.sc-tip{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 16px;font-size:clamp(.62rem,1.4vw,.8rem);color:rgba(255,255,255,.78);line-height:1.6;max-width:640px;text-align:center;animation:si .6s .4s both;}
+.sc-tip strong{display:block;margin-bottom:3px;font-size:clamp(.55rem,1.1vw,.68rem);text-transform:uppercase;letter-spacing:1.5px;}
+.sc-tools{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;animation:si .6s .3s both;}
+.sc-tool{padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);text-align:center;min-width:72px;}
+.sc-tool-e{font-size:1.3rem;margin-bottom:3px;}
+.sc-tool-n{font-size:clamp(.55rem,1.1vw,.68rem);font-weight:700;color:#fff;}
+.sc-tool-p{font-size:clamp(.48rem,.9vw,.58rem);color:rgba(255,255,255,.35);margin-top:1px;}
+.sc-checks{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:640px;animation:si .6s .25s both;}
+.sc-ck{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border-radius:7px;padding:7px 10px;font-size:clamp(.58rem,1.2vw,.75rem);color:rgba(255,255,255,.8);}
+
+/* CONTROLS */
+.player-controls{padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.3);}
+.progress-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.t-lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap;}
+.seeker{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:99px;cursor:pointer;position:relative;}
+.seeker-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:99px;transition:width .15s linear;position:relative;}
+.seeker-fill::after{content:'';position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);}
+.ctrl-row{display:flex;align-items:center;gap:8px;}
+.cb{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,.07);color:var(--text);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.cb:hover{background:rgba(255,255,255,.15);}
+.cb.pp{width:42px;height:42px;background:var(--orange);box-shadow:0 0 20px rgba(255,107,53,.4);}
+.cb.pp:hover{transform:scale(1.08);box-shadow:0 0 30px rgba(255,107,53,.6);}
+.slide-ind{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);margin-left:auto;}
+.caption-bar{margin-top:10px;padding:8px 14px;background:rgba(255,255,255,.04);border-radius:8px;font-size:.78rem;color:rgba(255,255,255,.72);line-height:1.5;min-height:42px;border-left:2px solid var(--orange);}
+.cap-chap{font-size:.6rem;color:var(--orange);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+
+/* CHAPTER CARDS */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;margin-top:28px;}
+.ch-card{padding:14px;background:var(--card);border:1px solid var(--border);border-radius:13px;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:11px;}
+.ch-card:hover{border-color:rgba(255,255,255,.18);background:var(--surface);transform:translateY(-2px);}
+.ch-card.playing{border-color:var(--orange);background:rgba(255,107,53,.07);}
+.ch-icon{font-size:1.5rem;flex-shrink:0;}
+.ch-num{font-size:.62rem;color:var(--muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.ch-name{font-size:.85rem;font-weight:700;color:#fff;margin-top:1px;}
+.ch-dur{font-size:.65rem;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace;}
+.ch-prog{margin-left:auto;width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--muted);flex-shrink:0;}
+.ch-prog.done{border-color:var(--green);color:var(--green);}
+.ch-prog.playing{border-color:var(--orange);color:var(--orange);}
+
+/* INFO */
+.info-sec{margin-top:28px;}
+.sec-h{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.sec-h::after{content:'';flex:1;height:1px;background:var(--border);}
+.steps-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.step-row{display:flex;gap:13px;padding:13px 16px;background:var(--card);border:1px solid var(--border);border-radius:11px;transition:border-color .2s;}
+.step-row:hover{border-color:rgba(255,255,255,.13);}
+.step-row-n{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0;color:#000;}
+.step-row-t{font-weight:700;color:#fff;font-size:.85rem;margin-bottom:2px;}
+.step-row-d{color:var(--muted);font-size:.78rem;line-height:1.6;}
+.tips-panel{background:rgba(255,107,53,.05);border:1px solid rgba(255,107,53,.18);border-radius:13px;padding:18px;margin-bottom:24px;}
+.tips-pt{font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:11px;display:flex;align-items:center;gap:7px;}
+.tip-i{display:flex;gap:9px;font-size:.82rem;color:var(--text);line-height:1.6;margin-bottom:7px;}
+.tip-i::before{content:'→';color:var(--orange);font-weight:800;flex-shrink:0;}
+
+/* BOTTOM NAV */
+.bnav{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--border);margin-top:24px;}
+.bnav-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--text);font-family:'Sora',sans-serif;font-size:.83rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.bnav-btn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);}
+.bnav-btn.primary{background:var(--orange);border:none;color:#fff;box-shadow:0 0 22px rgba(255,107,53,.32);}
+.bnav-btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(255,107,53,.52);}
+.bnav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.bnav-btn:disabled:hover{transform:none;}
+
+/* COMPLETION */
+.completion{display:none;text-align:center;padding:80px 24px;animation:fi .6s ease;}
+.completion.on{display:block;}
+.comp-trophy{font-size:5rem;margin-bottom:18px;animation:bi 1s ease;}
+@keyframes bi{0%{transform:scale(0) rotate(-10deg);}60%{transform:scale(1.2) rotate(5deg);}100%{transform:scale(1) rotate(0);}}
+.comp-title{font-size:clamp(2rem,6vw,3.5rem);font-weight:900;background:linear-gradient(135deg,var(--orange),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
+.comp-sub{color:var(--muted);max-width:480px;margin:0 auto 36px;line-height:1.8;}
+.cert{max-width:460px;margin:0 auto 32px;background:var(--card);border:1px solid rgba(255,107,53,.22);border-radius:16px;padding:28px;position:relative;overflow:hidden;}
+.cert::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,53,.05),rgba(139,92,246,.05));}
+.cert-inner{position:relative;}
+.cert-brand{font-size:.68rem;color:var(--orange);font-weight:800;text-transform:uppercase;letter-spacing:2px;margin-bottom:5px;}
+.cert-title{font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:3px;}
+.cert-sub{color:var(--muted);font-size:.82rem;margin-bottom:16px;}
+.cert-hr{height:1px;background:var(--border);margin:16px 0;}
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;text-align:left;}
+.cert-fl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:1px;}
+.cert-fv{font-weight:700;color:#fff;font-size:.82rem;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-aurora"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="brand-pill"><span class="live-dot"></span> BrainVisions India</div>
+    <h1>Social Media<br><em>Masterclass</em></h1>
+    <p class="hero-lead">4 animated video tutorials — watch each chapter play through step by step with narration, visuals, and guided walkthroughs.</p>
+    <div class="chapter-pills">
+      <span class="chapter-pill" style="color:#e1306c;border-color:rgba(225,48,108,.3);background:rgba(225,48,108,.08);">📸 Instagram Setup</span>
+      <span class="chapter-pill" style="color:#ef4444;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08);">▶️ YouTube Channel</span>
+      <span class="chapter-pill" style="color:#8b5cf6;border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.08);">🎬 Creating Videos</span>
+      <span class="chapter-pill" style="color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08);">📊 Presentations</span>
+    </div>
+    <button class="hero-cta" onclick="launchApp()">
+      Watch Tutorials
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="topbar-brand">⚡ BrainVisions India</div>
+    <div class="topbar-pw"><div class="topbar-pf" id="topPF" style="width:0%"></div></div>
+    <div class="topbar-lbl" id="topLbl">0 / 4 done</div>
+  </div>
+  <div class="chapter-tabs" id="chapterTabs"></div>
+  <div id="lessonsWrap"></div>
+  <div class="completion" id="completionScreen">
+    <div class="comp-trophy">🏆</div>
+    <div class="comp-title">You Did It!</div>
+    <p class="comp-sub">You've completed all 4 chapters of the BrainVisions India Social Media Masterclass. Time to go live!</p>
+    <div class="cert">
+      <div class="cert-inner">
+        <div class="cert-brand">Certificate of Completion</div>
+        <div class="cert-title">Social Media Masterclass</div>
+        <div class="cert-sub">All 4 chapters completed</div>
+        <div class="cert-hr"></div>
+        <div class="cert-grid">
+          <div><div class="cert-fl">Issued by</div><div class="cert-fv">BrainVisions India</div></div>
+          <div><div class="cert-fl">Modules</div><div class="cert-fv">4 Chapters</div></div>
+          <div><div class="cert-fl">Topics</div><div class="cert-fv">Instagram & YouTube</div></div>
+          <div><div class="cert-fl">Date</div><div class="cert-fv" id="certDate"></div></div>
+        </div>
+      </div>
+    </div>
+    <button class="hero-cta" onclick="restartAll()">
+      Restart Course
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ══════ DATA ══════
+const SLIDE_MS = 6000;
+
+const CHAPTERS = [
+{
+  id:0,icon:'📸',title:'Instagram Setup',accent:'#e1306c',dur:'~4 min',
+  slides:[
+    {bg:'sl-insta',cap:'Welcome to Chapter 1! Learn how to create and optimize your Instagram account from scratch — even with zero experience.',
+     html:`<div class="sc-badge" style="color:#e1306c;border-color:#e1306c;background:rgba(225,48,108,.1);">Chapter 1 · Instagram</div>
+      <div class="sc-h1" style="color:#fff;">Create Your <span style="background:linear-gradient(135deg,#e1306c,#f77737);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Instagram</span></div>
+      <div class="sc-sub">From zero to a fully optimized profile that attracts followers</div>
+      <div class="sc-stats" style="margin-top:18px;">
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#e1306c;">2B+</div><div class="sc-stat-l">Monthly Users</div></div>
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#f77737;">6</div><div class="sc-stat-l">Steps</div></div>
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#fff;">Free</div><div class="sc-stat-l">To Start</div></div>
+      </div>`},
+    {bg:'sl-insta',cap:'Download Instagram from your app store and sign up with your email or phone number. Choose a strong password you will remember.',
+     html:`<div class="sc-badge" style="color:#e1306c;border-color:#e1306c;background:rgba(225,48,108,.1);">Getting Started</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Download & Sign Up</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#e1306c;">1</div><div class="sc-step-t">Open <strong>App Store</strong> or <strong>Google Play</strong> → search "Instagram" → tap Install</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#c13584;">2</div><div class="sc-step-t">Tap <strong>Create new account</strong> → Enter email or phone → Create strong password</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#833ab4;">3</div><div class="sc-step-t">Enter your full name and date of birth → confirm your account via email/SMS</div></div>
+      </div>`},
+    {bg:'sl-insta',cap:'Choose a username that is short, memorable, and brand-aligned. Avoid random numbers. Keep it consistent with your other social media.',
+     html:`<div class="sc-badge" style="color:#c13584;border-color:#c13584;background:rgba(193,53,132,.1);">Your Username</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Pick the Perfect Username</div>
+      <div class="sc-2col" style="align-items:center;">
+        <div style="background:rgba(225,48,108,.08);border:1px solid rgba(225,48,108,.2);border-radius:14px;padding:16px;text-align:center;flex-shrink:0;width:clamp(130px,18vw,180px);">
+          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f77737,#e1306c);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📸</div>
+          <div style="font-size:clamp(.6rem,1.3vw,.75rem);font-weight:800;color:#fff;">@brainvisions_india</div>
+          <div style="font-size:clamp(.5rem,1vw,.62rem);color:rgba(255,255,255,.4);margin-top:3px;">BrainVisions India</div>
+        </div>
+        <div class="sc-col">
+          <ul class="sc-list">
+            <li style="border-color:#e1306c;">✓ Short & memorable</li>
+            <li style="border-color:#c13584;">✓ Reflects your brand</li>
+            <li style="border-color:#833ab4;">✓ No random numbers</li>
+            <li style="border-color:#5851db;">✓ Consistent across platforms</li>
+          </ul>
+        </div>
+      </div>`},
+    {bg:'sl-insta',cap:'Your profile bio has only 150 characters. Use the formula: who you are, what you offer, and a clear call to action for visitors.',
+     html:`<div class="sc-badge" style="color:#c13584;border-color:#c13584;background:rgba(193,53,132,.1);">Profile Optimization</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Optimize Your Profile</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#e1306c;">📷</div><div class="sc-step-t"><strong>Profile Photo:</strong> Clear headshot or logo — first impression matters</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#c13584;">✍️</div><div class="sc-step-t"><strong>Bio:</strong> Who you are | What you do | Call to Action (max 150 chars)</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#833ab4;">🔗</div><div class="sc-step-t"><strong>Link in Bio:</strong> Use Linktree.com to share multiple links at once</div></div>
+        <div class="sc-step" style="animation-delay:.4s"><div class="sc-step-n" style="background:#5851db;">💼</div><div class="sc-step-t"><strong>Pro Account:</strong> Settings → Account → Switch to Professional → unlock analytics</div></div>
+      </div>`},
+    {bg:'sl-insta',cap:'Use the hook-value-CTA caption formula. The first line must grab attention, the middle delivers value, and the end tells people what to do.',
+     html:`<div class="sc-badge" style="color:#f77737;border-color:#f77737;background:rgba(247,119,55,.1);">First Post</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">The Caption Formula</div>
+      <div style="display:flex;gap:10px;width:100%;max-width:680px;animation:si .6s .2s both;">
+        <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(247,119,55,.2);border-radius:10px;padding:11px;">
+          <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:#f77737;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">🪝 HOOK</div>
+          <div style="font-size:clamp(.62rem,1.3vw,.78rem);color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;">"Struggling to grow on Instagram? These 5 tips changed everything..."</div>
+        </div>
+        <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(225,48,108,.2);border-radius:10px;padding:11px;">
+          <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:#e1306c;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">💎 VALUE</div>
+          <div style="font-size:clamp(.62rem,1.3vw,.78rem);color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;">Share tips, lessons, or insights that make people want to save your post.</div>
+        </div>
+        <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(131,58,180,.2);border-radius:10px;padding:11px;">
+          <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:#833ab4;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">📣 CTA</div>
+          <div style="font-size:clamp(.62rem,1.3vw,.78rem);color:rgba(255,255,255,.8);line-height:1.5;font-style:italic;">"Save this! Follow for daily tips! Drop 🔥 below if this helped!"</div>
+        </div>
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#f77737;">HASHTAG TIP</strong>Add 5–10 hashtags. Mix popular (#socialmedia) with niche ones (#IndianCreators)</div>`},
+  ],
+  steps:[
+    {t:'Download Instagram',d:'App Store (iPhone) or Google Play (Android) → search "Instagram" → Install'},
+    {t:'Sign Up',d:'Tap "Create new account" → email or phone → strong password → full name'},
+    {t:'Choose Username',d:'Short, memorable, brand-aligned. No random numbers. Example: @brainvisions_india'},
+    {t:'Edit Your Profile',d:'Clear profile photo, 150-char bio (who + what + CTA), website link via Linktree'},
+    {t:'Switch to Professional Account',d:'Settings → Account → Switch to Professional → Creator or Business for analytics'},
+    {t:'Post Your First Content',d:'Tap + → photo/video → hook caption + value + CTA → 5–10 hashtags → Share!'},
+  ],
+  tips:[
+    'Use a real, clear photo as your profile pic — it builds trust instantly with new visitors.',
+    'Post at minimum 3 times per week. Consistency beats perfection every single time.',
+    'Reply to every comment within the first hour after posting to boost your algorithmic reach.',
+    'Use Story Highlights to organize your best content: About, Tips, Reviews, Behind-the-Scenes.',
+  ]
+},
+{
+  id:1,icon:'▶️',title:'YouTube Channel',accent:'#ef4444',dur:'~4 min',
+  slides:[
+    {bg:'sl-yt',cap:'Welcome to Chapter 2! YouTube is the world\'s second largest search engine. A video you upload today can get views for years to come.',
+     html:`<div class="sc-badge" style="color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,.1);">Chapter 2 · YouTube</div>
+      <div class="sc-h1" style="color:#fff;">Build Your <span style="background:linear-gradient(135deg,#ef4444,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">YouTube Channel</span></div>
+      <div class="sc-sub">Set up, brand, and optimize from day one</div>
+      <div class="sc-stats" style="margin-top:18px;">
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#ef4444;">2nd</div><div class="sc-stat-l">Largest Search Engine</div></div>
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#f97316;">2.7B</div><div class="sc-stat-l">Monthly Users</div></div>
+        <div class="sc-stat"><div class="sc-stat-n" style="color:#fff;">∞</div><div class="sc-stat-l">Video Lifespan</div></div>
+      </div>`},
+    {bg:'sl-yt',cap:'Creating your YouTube channel takes less than 2 minutes. All you need is a Gmail account and you can be live today.',
+     html:`<div class="sc-badge" style="color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,.1);">Create Channel</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Create in 3 Steps</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#ef4444;">1</div><div class="sc-step-t">Go to <strong>youtube.com</strong> → Sign In with Gmail (or create one free)</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#dc2626;">2</div><div class="sc-step-t">Click your <strong>profile picture</strong> → tap <strong>"Create a channel"</strong> → Enter channel name</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#b91c1c;">3</div><div class="sc-step-t">Confirm → Your channel is live! Now go to Customize Channel to add branding</div></div>
+      </div>
+      <div class="sc-tip"><strong style="color:#ef4444;">NAME TIP</strong>Use your brand name: "BrainVisions India" — clear, searchable, and memorable</div>`},
+    {bg:'sl-yt',cap:'Your channel banner is the first thing visitors see. Canva has free YouTube banner templates perfectly sized at 2560 by 1440 pixels.',
+     html:`<div class="sc-badge" style="color:#f97316;border-color:#f97316;background:rgba(249,115,22,.1);">Channel Branding</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Brand Your Channel</div>
+      <div style="width:100%;max-width:660px;animation:si .6s .2s both;">
+        <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);border-radius:11px;overflow:hidden;margin-bottom:10px;">
+          <div style="height:60px;background:linear-gradient(135deg,#1a0000,#3d0000);display:flex;align-items:center;justify-content:center;font-size:clamp(.58rem,1.2vw,.7rem);color:rgba(255,255,255,.35);">Channel Banner · 2560×1440px · Design in Canva</div>
+          <div style="padding:10px 14px;display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#f97316);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;">▶️</div>
+            <div><div style="font-size:clamp(.7rem,1.5vw,.85rem);font-weight:800;color:#fff;">BrainVisions India</div><div style="font-size:clamp(.55rem,1.1vw,.65rem);color:rgba(255,255,255,.35);">0 subscribers</div></div>
+            <div style="margin-left:auto;background:#ef4444;border-radius:5px;padding:4px 10px;font-size:clamp(.55rem,1.1vw,.65rem);font-weight:700;color:#fff;">Subscribe</div>
+          </div>
+        </div>
+        <div class="sc-checks">
+          <div class="sc-ck">🖼️ Icon: 800×800px logo/photo</div>
+          <div class="sc-ck">🎨 Banner: Canva free templates</div>
+          <div class="sc-ck">📝 Description: keywords + schedule</div>
+          <div class="sc-ck">🔗 Add Instagram & website links</div>
+        </div>
+      </div>`},
+    {bg:'sl-yt',cap:'YouTube SEO is crucial. Put your main keyword in the first 5 words of your title. This is what determines whether your video gets found.',
+     html:`<div class="sc-badge" style="color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,.1);">YouTube SEO</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Get Found on YouTube</div>
+      <div class="sc-2col">
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#10b981;">✅ Good Title</div>
+          <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.18);border-radius:7px;padding:8px 10px;font-size:clamp(.6rem,1.3vw,.76rem);color:rgba(255,255,255,.85);margin-bottom:7px;font-style:italic;">"How to Create Instagram Account 2025 | Beginner's Guide"</div>
+          <ul class="sc-list"><li style="border-color:#10b981;">Keyword first</li><li style="border-color:#10b981;">Under 60 characters</li><li style="border-color:#10b981;">Clear viewer benefit</li></ul>
+        </div>
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#ef4444;">❌ Weak Title</div>
+          <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:7px;padding:8px 10px;font-size:clamp(.6rem,1.3vw,.76rem);color:rgba(255,255,255,.85);margin-bottom:7px;font-style:italic;">"My First Video | Check this out!!"</div>
+          <ul class="sc-list"><li style="border-color:#ef4444;">No keyword</li><li style="border-color:#ef4444;">No clear benefit</li><li style="border-color:#ef4444;">Not searchable</li></ul>
+        </div>
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#ef4444;">DESCRIPTION TIP</strong>Write 200+ words. Include your keyword in the first 2 sentences. Add timestamps.</div>`},
+    {bg:'sl-yt',cap:'Your thumbnail is the number one factor for click-through rate. A better thumbnail can double or triple your views on the same video.',
+     html:`<div class="sc-badge" style="color:#f97316;border-color:#f97316;background:rgba(249,115,22,.1);">Thumbnails</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Thumbnails That Get Clicks</div>
+      <div style="display:flex;gap:10px;width:100%;max-width:660px;animation:si .6s .2s both;">
+        <div style="flex:1;">
+          <div style="background:linear-gradient(135deg,#1a0000,#3d1500);border:2px solid #ef4444;border-radius:9px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7%;position:relative;">
+            <div style="font-size:clamp(.8rem,2vw,1.2rem);font-weight:900;color:#fff;text-align:center;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.8);">How to Grow<br><span style="color:#ef4444;">on Instagram</span></div>
+            <div style="position:absolute;bottom:5px;right:7px;background:#ef4444;border-radius:4px;padding:2px 7px;font-size:clamp(.45rem,.9vw,.55rem);font-weight:800;color:#fff;">2025</div>
+          </div>
+          <div style="text-align:center;font-size:clamp(.55rem,1.1vw,.65rem);color:#10b981;margin-top:4px;">✅ Contrast · Bold text · Brand color</div>
+        </div>
+        <div style="flex:1;">
+          <div style="background:#1a1a1a;border:2px solid rgba(255,255,255,.08);border-radius:9px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:rgba(255,255,255,.3);">screenshot.jpg</div>
+          </div>
+          <div style="text-align:center;font-size:clamp(.55rem,1.1vw,.65rem);color:#ef4444;margin-top:4px;">❌ No text · Dark · Forgettable</div>
+        </div>
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#f97316;">SIZE</strong>Create thumbnails at 1280×720px in Canva. Use faces, bright colors, and max 5 words.</div>`},
+  ],
+  steps:[
+    {t:'Sign In to Google',d:'youtube.com → Sign In with Gmail or create one free at google.com/gmail'},
+    {t:'Create Your Channel',d:'Click profile picture → "Create a channel" → Enter your brand name (BrainVisions India)'},
+    {t:'Add Channel Art',d:'Icon (800×800px) and Banner (2560×1440px) — use Canva\'s free YouTube templates'},
+    {t:'Write Channel Description',d:'What you teach, who it\'s for, how often you upload + 2–3 natural keywords'},
+    {t:'Set Up Channel Sections',d:'Add Featured Video, Latest Uploads, Popular Uploads to your channel homepage'},
+    {t:'Add Channel Keywords',d:'YouTube Studio → Settings → Channel → Basic Info → add 10–15 keywords'},
+  ],
+  tips:[
+    'Pin a 60–90 second channel trailer welcoming new visitors explaining what your channel offers.',
+    'Respond to every comment in your first 30 days — it signals to YouTube that your channel is active.',
+    'Upload consistently at least once a week — YouTube rewards creators who post on a schedule.',
+    'Add your social media links (Instagram, website) to your YouTube channel page for cross-promotion.',
+  ]
+},
+{
+  id:2,icon:'🎬',title:'Creating Videos',accent:'#8b5cf6',dur:'~5 min',
+  slides:[
+    {bg:'sl-vid',cap:'Chapter 3 is all about creating your actual video content. The good news: your smartphone is completely sufficient to start recording today.',
+     html:`<div class="sc-badge" style="color:#8b5cf6;border-color:#8b5cf6;background:rgba(139,92,246,.1);">Chapter 3 · Video</div>
+      <div class="sc-h1" style="color:#fff;">Create Videos That <span style="background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Get Watched</span></div>
+      <div class="sc-sub">From recording to editing to publishing — your complete workflow</div>
+      <div class="sc-tools" style="margin-top:18px;">
+        <div class="sc-tool"><div class="sc-tool-e">📱</div><div class="sc-tool-n">Smartphone</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">✂️</div><div class="sc-tool-n">CapCut</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">🎵</div><div class="sc-tool-n">YT Audio Lib</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">💡</div><div class="sc-tool-n">Ring Light</div><div class="sc-tool-p">₹1,500</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">🎙️</div><div class="sc-tool-n">Clip Mic</div><div class="sc-tool-p">₹500</div></div>
+      </div>`},
+    {bg:'sl-vid',cap:'Good lighting is free — just face a window! Daylight is the most flattering light for video. Position your camera at exact eye level.',
+     html:`<div class="sc-badge" style="color:#8b5cf6;border-color:#8b5cf6;background:rgba(139,92,246,.1);">Recording Setup</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Set Up for Success</div>
+      <div class="sc-2col">
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#8b5cf6;">💡 Lighting</div>
+          <ul class="sc-list">
+            <li style="border-color:#8b5cf6;">Face a window — free natural light</li>
+            <li style="border-color:#8b5cf6;">Ring light for consistent results</li>
+            <li style="border-color:#8b5cf6;">Never shoot with light behind you</li>
+          </ul>
+        </div>
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#a78bfa;">🎙️ Audio</div>
+          <ul class="sc-list">
+            <li style="border-color:#a78bfa;">Record a 10-second test first</li>
+            <li style="border-color:#a78bfa;">Clip-on mic = 10x better audio</li>
+            <li style="border-color:#a78bfa;">Soft rooms absorb echo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sc-tip"><strong style="color:#8b5cf6;">CAMERA TIP</strong>Eye level + rule of thirds. Place yourself slightly off-center. Leave space above head.</div>`},
+    {bg:'sl-vid',cap:'The first 15 seconds of your video determine whether people stay or leave. Start with the viewer\'s benefit, not a greeting.',
+     html:`<div class="sc-badge" style="color:#a78bfa;border-color:#a78bfa;background:rgba(167,139,250,.1);">The Hook</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Hook in 15 Seconds</div>
+      <div style="width:100%;max-width:660px;animation:si .6s .2s both;">
+        <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:11px;padding:13px;margin-bottom:10px;">
+          <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:#10b981;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;">✅ WINNING HOOK</div>
+          <div style="font-size:clamp(.7rem,1.6vw,.9rem);color:#fff;font-style:italic;line-height:1.5;">"In this video, I'll show you exactly how to set up Instagram and get your first 100 followers — even if you've never posted before."</div>
+        </div>
+        <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:11px;padding:13px;">
+          <div style="font-size:clamp(.55rem,1.1vw,.65rem);color:#ef4444;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;">❌ WEAK OPENING</div>
+          <div style="font-size:clamp(.7rem,1.6vw,.9rem);color:rgba(255,255,255,.55);font-style:italic;line-height:1.5;">"Hey guys, welcome back to my channel! Today I'm going to talk about some stuff, so yeah let's get started..."</div>
+        </div>
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#8b5cf6;">SPEED TIP</strong>Talk 20% faster than normal. It sounds more energetic and keeps viewers engaged.</div>`},
+    {bg:'sl-vid',cap:'Editing doesn\'t need to be complex. Trim mistakes, add background music, and enable auto-captions. That\'s all you need to start.',
+     html:`<div class="sc-badge" style="color:#8b5cf6;border-color:#8b5cf6;background:rgba(139,92,246,.1);">Editing</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Edit Your Video</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#8b5cf6;">1</div><div class="sc-step-t"><strong>Trim</strong> awkward pauses at start/end. Cut all "umms", mistakes, and dead air</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#7c3aed;">2</div><div class="sc-step-t"><strong>Add music</strong> from YouTube Audio Library (royalty-free). Keep volume at 10–15%</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#6d28d9;">3</div><div class="sc-step-t"><strong>Auto-caption</strong> your video in CapCut. Subtitles boost watch time and accessibility</div></div>
+        <div class="sc-step" style="animation-delay:.4s"><div class="sc-step-n" style="background:#5b21b6;">4</div><div class="sc-step-t"><strong>Export at 1080p</strong> Full HD. Then create your thumbnail in Canva (1280×720px)</div></div>
+      </div>`},
+    {bg:'sl-vid',cap:'Share your video everywhere in the first 24 hours of publishing. Early views and engagement signal YouTube to push your video to more people.',
+     html:`<div class="sc-badge" style="color:#a78bfa;border-color:#a78bfa;background:rgba(167,139,250,.1);">Publishing</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Upload & Promote</div>
+      <div class="sc-checks">
+        <div class="sc-ck">🖼️ Custom thumbnail in Canva</div>
+        <div class="sc-ck">📝 SEO title with keyword first</div>
+        <div class="sc-ck">📄 200+ word description written</div>
+        <div class="sc-ck">🏷️ 5–10 relevant tags added</div>
+        <div class="sc-ck">📊 Category selected (Education)</div>
+        <div class="sc-ck">📱 Shared on Instagram Reels</div>
+        <div class="sc-ck">💬 Replied to early comments</div>
+        <div class="sc-ck">🔔 Asked viewers to subscribe</div>
+      </div>`},
+  ],
+  steps:[
+    {t:'Plan Your Video',d:'Research topic on YouTube. Write outline: Hook (15s) → Content → CTA. One topic only.'},
+    {t:'Set Up Lighting & Audio',d:'Face window or use ring light. Test audio with 10-second recording first.'},
+    {t:'Record Multiple Takes',d:'Press record! Eye contact with the LENS. Speak 20% faster. Record retakes freely.'},
+    {t:'Edit in CapCut',d:'Trim start/end, remove mistakes, add royalty-free music, auto-caption.'},
+    {t:'Export at 1080p',d:'Full HD minimum. Then design thumbnail in Canva at 1280×720px.'},
+    {t:'Optimize & Upload',d:'SEO title + 200-word description + 5–10 tags → Publish → Share everywhere in 24hrs.'},
+  ],
+  tips:[
+    'Audio quality matters more than video quality. A ₹1,000 clip-on mic is your best first investment.',
+    'Batch-record 3–4 videos in one session to stay consistent without daily filming sessions.',
+    'Your first 15 seconds are everything — lead with what the viewer will GAIN, not a greeting.',
+    'Add captions/subtitles in CapCut to every video — it dramatically improves watch time retention.',
+  ]
+},
+{
+  id:3,icon:'📊',title:'Presentations',accent:'#f59e0b',dur:'~4 min',
+  slides:[
+    {bg:'sl-pptx',cap:'Chapter 4 is about creating professional presentations using completely free tools, and presenting them on camera for YouTube or online courses.',
+     html:`<div class="sc-badge" style="color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1);">Chapter 4 · Presentations</div>
+      <div class="sc-h1" style="color:#fff;">Design Slides That <span style="background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Actually Impress</span></div>
+      <div class="sc-sub">Free tools + design rules + on-camera confidence</div>
+      <div class="sc-tools" style="margin-top:18px;">
+        <div class="sc-tool"><div class="sc-tool-e">🎨</div><div class="sc-tool-n">Canva</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">📊</div><div class="sc-tool-n">Google Slides</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">🖼️</div><div class="sc-tool-n">Unsplash</div><div class="sc-tool-p">Free</div></div>
+        <div class="sc-tool"><div class="sc-tool-e">🎥</div><div class="sc-tool-n">OBS Studio</div><div class="sc-tool-p">Free</div></div>
+      </div>`},
+    {bg:'sl-pptx',cap:'The 6 by 6 rule is the most important design rule: maximum 6 bullets per slide, maximum 6 words per bullet. Slides are visual aids, not documents.',
+     html:`<div class="sc-badge" style="color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1);">Design Rules</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">5 Rules for Great Slides</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#f59e0b;">6×6</div><div class="sc-step-t"><strong>6×6 Rule:</strong> Max 6 bullets per slide, max 6 words per bullet — keep it visual!</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#d97706;">2F</div><div class="sc-step-t"><strong>2 Fonts Max:</strong> One display font for headings, one clean font for body text</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#b45309;">3C</div><div class="sc-step-t"><strong>3 Colors Max:</strong> Use your 2–3 brand colors consistently throughout</div></div>
+        <div class="sc-step" style="animation-delay:.4s"><div class="sc-step-n" style="background:#92400e;">📷</div><div class="sc-step-t"><strong>High-Res Images:</strong> Free on Unsplash.com and Pexels.com — never pixelated</div></div>
+      </div>`},
+    {bg:'sl-pptx',cap:'Every great presentation tells a story. Use this proven arc: Hook — Problem — Solution — Action Steps — Call to Action.',
+     html:`<div class="sc-badge" style="color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1);">Story Structure</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Tell a Story</div>
+      <div style="display:flex;align-items:center;gap:6px;width:100%;max-width:720px;animation:si .6s .2s both;">
+        ${['🎯 Hook','❓ Problem','💡 Solution','📋 Steps','📣 CTA'].map((s,i)=>`
+          <div style="flex:1;text-align:center;">
+            <div style="background:rgba(245,158,11,${.08+i*.05});border:1px solid rgba(245,158,11,${.12+i*.06});border-radius:9px;padding:9px 4px;">
+              <div style="font-size:clamp(.9rem,2vw,1.3rem);">${s.split(' ')[0]}</div>
+              <div style="font-size:clamp(.48rem,1vw,.62rem);color:rgba(255,255,255,.65);margin-top:3px;font-weight:600;">${s.split(' ').slice(1).join(' ')}</div>
+            </div>
+            ${i<4?`<div style="font-size:.7rem;color:rgba(255,255,255,.2);">→</div>`:''}
+          </div>`).join('')}
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#f59e0b;">OPENING TIP</strong>Never start with "Today I'll talk about..." — open with a bold question or surprising fact.</div>`},
+    {bg:'sl-pptx',cap:'Canva is the easiest free presentation tool. Search for a template, customize your brand colors and fonts, and add your logo to every slide.',
+     html:`<div class="sc-badge" style="color:#d97706;border-color:#d97706;background:rgba(217,119,6,.1);">Using Canva</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Canva Workflow</div>
+      <div class="sc-steps">
+        <div class="sc-step" style="animation-delay:.1s"><div class="sc-step-n" style="background:#f59e0b;">1</div><div class="sc-step-t">Go to <strong>canva.com</strong> → Click "Presentations" → Search for a template you like</div></div>
+        <div class="sc-step" style="animation-delay:.2s"><div class="sc-step-n" style="background:#d97706;">2</div><div class="sc-step-t">Customize text, swap images, change colors to match your brand palette</div></div>
+        <div class="sc-step" style="animation-delay:.3s"><div class="sc-step-n" style="background:#b45309;">3</div><div class="sc-step-t">Add your <strong>BrainVisions India</strong> logo to every slide (Insert → Uploads → logo)</div></div>
+        <div class="sc-step" style="animation-delay:.4s"><div class="sc-step-n" style="background:#92400e;">4</div><div class="sc-step-t">Download as <strong>PDF</strong> for sharing or <strong>PPTX</strong> for PowerPoint editing</div></div>
+      </div>`},
+    {bg:'sl-pptx',cap:'Presenting on camera while showing slides is a powerful content format. Use OBS Studio free to record both your face and slides simultaneously.',
+     html:`<div class="sc-badge" style="color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1);">On Camera</div>
+      <div class="sc-h1" style="color:#fff;font-size:clamp(1.1rem,3vw,2rem);">Present on Camera</div>
+      <div class="sc-2col">
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#f59e0b;">🎥 Setup</div>
+          <ul class="sc-list">
+            <li style="border-color:#f59e0b;">Use OBS or Loom to record screen + webcam</li>
+            <li style="border-color:#f59e0b;">Open slides in full-screen mode</li>
+            <li style="border-color:#f59e0b;">Position webcam in top corner</li>
+          </ul>
+        </div>
+        <div class="sc-col">
+          <div class="sc-col-t" style="color:#d97706;">🎤 Delivery</div>
+          <ul class="sc-list">
+            <li style="border-color:#d97706;">Look at the camera LENS, not screen</li>
+            <li style="border-color:#d97706;">Practice full run-through twice</li>
+            <li style="border-color:#d97706;">Pause for emphasis — don't rush</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sc-tip" style="margin-top:10px;"><strong style="color:#f59e0b;">CONFIDENCE TIP</strong>Record a practice run and watch it back once. You'll spot improvements instantly.</div>`},
+  ],
+  steps:[
+    {t:'Choose Your Tool',d:'Canva (easiest), Google Slides (free cloud), or PowerPoint Online (free)'},
+    {t:'Pick a Template',d:'Never start blank — search for a template in Canva matching your topic area'},
+    {t:'Apply 6×6 Rule',d:'Max 6 bullets per slide, max 6 words per bullet. Less text = more visual impact'},
+    {t:'Add High-Res Images',d:'Download free photos from Unsplash.com or Pexels.com — no attribution needed'},
+    {t:'Brand Every Slide',d:'Add BrainVisions India logo to corner. Use consistent 2–3 brand colors throughout'},
+    {t:'Record Your Presentation',d:'OBS Studio (free) records screen + webcam. Practice 2x before final recording'},
+  ],
+  tips:[
+    'Tell a story arc: Hook → Problem → Solution → Steps → Call to Action on every presentation.',
+    'Look at the camera LENS when presenting — this creates genuine eye contact with your viewers.',
+    'Use simple fade transitions only. Flashy effects distract and make your slides look amateur.',
+    'Add your @brainvisions_india handle on the final slide of every single presentation you create.',
+  ]
+}];
+
+// ══════ STATE ══════
+let currentChapter = 0;
+let slideTimers = {};
+let slideElapsed = {};
+let doneSets = [false,false,false,false];
+
+// ══════ LAUNCH ══════
+function launchApp(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('app').classList.add('on');
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'});
+  buildTabs();
+  buildLessons();
+  showLesson(0);
+  window.scrollTo(0,0);
+}
+
+// ══════ TABS ══════
+function buildTabs(){
+  document.getElementById('chapterTabs').innerHTML=CHAPTERS.map((c,i)=>`
+    <button class="ctab ${i===0?'active':''}" id="ctab${i}" onclick="switchTo(${i})">
+      <span class="ctab-n">${i+1}</span>${c.icon} ${c.title}
+    </button>`).join('');
+}
+
+function refreshTabs(){
+  CHAPTERS.forEach((_,i)=>{
+    const t=document.getElementById(`ctab${i}`);
+    if(!t) return;
+    t.className='ctab'+(i===currentChapter?' active':doneSets[i]?' done':'');
+  });
+}
+
+// ══════ LESSONS ══════
+function buildLessons(){
+  document.getElementById('lessonsWrap').innerHTML=CHAPTERS.map((ch,ci)=>`
+    <div class="lesson" id="lesson${ci}">
+      <div class="player-wrap">
+        <div class="player-title-bar">
+          <div class="pdots"><div class="pd pd1"></div><div class="pd pd2"></div><div class="pd pd3"></div></div>
+          <div class="player-title-text" id="pttl${ci}">${ch.icon} ${ch.title} — Slide 1 of ${ch.slides.length}</div>
+        </div>
+        <div class="video-stage">
+          ${ch.slides.map((sl,si)=>`<div class="vs-slide ${sl.bg} ${si===0?'active':''}" id="sl${ci}_${si}">${sl.html}</div>`).join('')}
+        </div>
+        <div class="player-controls">
+          <div class="progress-row">
+            <span class="t-lbl" id="tl${ci}">0:00</span>
+            <div class="seeker" id="sk${ci}" onclick="seekClick(${ci},event)">
+              <div class="seeker-fill" id="sf${ci}" style="width:0%"></div>
+            </div>
+            <span class="t-lbl">${fmtTime(ch.slides.length*SLIDE_MS/1000)}</span>
+          </div>
+          <div class="ctrl-row">
+            <button class="cb" onclick="prevSl(${ci})" title="Previous">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5"/></svg>
+            </button>
+            <button class="cb pp" id="ppb${ci}" onclick="togglePlay(${ci})">
+              <svg id="ppi${ci}" width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+            <button class="cb" onclick="nextSl(${ci})" title="Next">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/></svg>
+            </button>
+            <button class="cb" onclick="restartVid(${ci})" style="font-size:.9rem;">↺</button>
+            <div class="slide-ind" id="sind${ci}">1 / ${ch.slides.length}</div>
+          </div>
+          <div class="caption-bar">
+            <div class="cap-chap">${ch.icon} ${ch.title}</div>
+            <span id="cap${ci}">${ch.slides[0].cap}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ch-grid">
+        ${CHAPTERS.map((c2,ci2)=>`
+          <div class="ch-card ${ci2===ci?'playing':''}" id="chc${ci}_${ci2}" onclick="switchTo(${ci2})">
+            <div class="ch-icon">${c2.icon}</div>
+            <div><div class="ch-num">Chapter ${ci2+1}</div><div class="ch-name">${c2.title}</div><div class="ch-dur">${c2.dur}</div></div>
+            <div class="ch-prog ${ci2===ci?'playing':doneSets[ci2]?'done':''}" id="chp${ci}_${ci2}">${ci2===ci?'▶':doneSets[ci2]?'✓':ci2+1}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="info-sec">
+        <div class="sec-h">📋 Step-by-Step Guide</div>
+        <div class="steps-list">
+          ${ch.steps.map((s,si)=>`
+            <div class="step-row">
+              <div class="step-row-n" style="background:${ch.accent};">${si+1}</div>
+              <div><div class="step-row-t">${s.t}</div><div class="step-row-d">${s.d}</div></div>
+            </div>`).join('')}
+        </div>
+        <div class="tips-panel">
+          <div class="tips-pt" style="color:${ch.accent};">💡 Pro Tips — BrainVisions India</div>
+          ${ch.tips.map(t=>`<div class="tip-i">${t}</div>`).join('')}
+        </div>
+        <div class="bnav">
+          <button class="bnav-btn" onclick="goPrev()" ${ci===0?'disabled':''}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Previous
+          </button>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);">${ci+1} / ${CHAPTERS.length}</span>
+          <button class="bnav-btn primary" onclick="finishChapter(${ci})">
+            ${ci<CHAPTERS.length-1?'Next Chapter':'Complete Course'}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function showLesson(idx){
+  document.querySelectorAll('.lesson').forEach(l=>l.classList.remove('on'));
+  const l=document.getElementById(`lesson${idx}`);
+  if(l) l.classList.add('on');
+}
+
+// ══════ PLAYBACK ══════
+function togglePlay(ci){
+  slideTimers[ci]?pause(ci):play(ci);
+}
+
+function play(ci){
+  const ch=CHAPTERS[ci];
+  setIcon(ci,false);
+  if(!slideElapsed[ci]) slideElapsed[ci]=0;
+  const t0=Date.now()-slideElapsed[ci];
+  slideTimers[ci]=setInterval(()=>{
+    const el=Date.now()-t0;
+    slideElapsed[ci]=el;
+    const total=ch.slides.length*SLIDE_MS;
+    const pct=Math.min(el/total*100,100);
+    const si=Math.min(Math.floor(el/SLIDE_MS),ch.slides.length-1);
+    document.getElementById(`sf${ci}`).style.width=pct+'%';
+    document.getElementById(`tl${ci}`).textContent=fmtTime(Math.floor(el/1000));
+    activateSlide(ci,si);
+    if(el>=total){pause(ci);slideElapsed[ci]=0;markDone(ci);}
+  },100);
+}
+
+function pause(ci){
+  if(slideTimers[ci]){clearInterval(slideTimers[ci]);slideTimers[ci]=null;}
+  setIcon(ci,true);
+}
+
+function setIcon(ci,showPlay){
+  const ic=document.getElementById(`ppi${ci}`);
+  if(!ic) return;
+  ic.innerHTML=showPlay?'<polygon points="5 3 19 12 5 21 5 3" fill="white"/>':'<rect x="6" y="4" width="4" height="16" rx="1" fill="white"/><rect x="14" y="4" width="4" height="16" rx="1" fill="white"/>';
+}
+
+function restartVid(ci){
+  pause(ci);slideElapsed[ci]=0;
+  activateSlide(ci,0);
+  document.getElementById(`sf${ci}`).style.width='0%';
+  document.getElementById(`tl${ci}`).textContent='0:00';
+}
+
+function prevSl(ci){
+  pause(ci);
+  const cur=getCurSl(ci);
+  const nxt=Math.max(0,cur-1);
+  slideElapsed[ci]=nxt*SLIDE_MS;
+  activateSlide(ci,nxt);
+  const pct=nxt/CHAPTERS[ci].slides.length*100;
+  document.getElementById(`sf${ci}`).style.width=pct+'%';
+  document.getElementById(`tl${ci}`).textContent=fmtTime(nxt*SLIDE_MS/1000);
+}
+
+function nextSl(ci){
+  pause(ci);
+  const ch=CHAPTERS[ci];
+  const cur=getCurSl(ci);
+  const nxt=Math.min(ch.slides.length-1,cur+1);
+  slideElapsed[ci]=nxt*SLIDE_MS;
+  activateSlide(ci,nxt);
+  const pct=nxt/ch.slides.length*100;
+  document.getElementById(`sf${ci}`).style.width=pct+'%';
+  document.getElementById(`tl${ci}`).textContent=fmtTime(nxt*SLIDE_MS/1000);
+}
+
+function seekClick(ci,e){
+  const sk=document.getElementById(`sk${ci}`);
+  const r=sk.getBoundingClientRect();
+  const pct=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
+  const ch=CHAPTERS[ci];
+  pause(ci);
+  const ms=pct*ch.slides.length*SLIDE_MS;
+  slideElapsed[ci]=ms;
+  activateSlide(ci,Math.min(Math.floor(ms/SLIDE_MS),ch.slides.length-1));
+  document.getElementById(`sf${ci}`).style.width=(pct*100)+'%';
+  document.getElementById(`tl${ci}`).textContent=fmtTime(Math.floor(ms/1000));
+}
+
+function getCurSl(ci){
+  const ch=CHAPTERS[ci];
+  for(let i=0;i<ch.slides.length;i++){
+    const e=document.getElementById(`sl${ci}_${i}`);
+    if(e&&e.classList.contains('active')) return i;
+  }
+  return 0;
+}
+
+function activateSlide(ci,si){
+  const ch=CHAPTERS[ci];
+  for(let i=0;i<ch.slides.length;i++){
+    const e=document.getElementById(`sl${ci}_${i}`);
+    if(e) e.classList.toggle('active',i===si);
+  }
+  const cap=document.getElementById(`cap${ci}`);
+  if(cap) cap.textContent=ch.slides[si].cap;
+  const ttl=document.getElementById(`pttl${ci}`);
+  if(ttl) ttl.textContent=`${ch.icon} ${ch.title} — Slide ${si+1} of ${ch.slides.length}`;
+  const ind=document.getElementById(`sind${ci}`);
+  if(ind) ind.textContent=`${si+1} / ${ch.slides.length}`;
+}
+
+function fmtTime(s){s=Math.floor(s);return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
+
+// ══════ NAVIGATION ══════
+function switchTo(idx){
+  pause(currentChapter);
+  currentChapter=idx;
+  showLesson(idx);
+  refreshTabs();
+  updateProgress();
+  window.scrollTo({top:100,behavior:'smooth'});
+}
+
+function goPrev(){if(currentChapter>0) switchTo(currentChapter-1);}
+
+function finishChapter(ci){
+  pause(ci);markDone(ci);
+  if(ci>=CHAPTERS.length-1){
+    document.querySelectorAll('.lesson').forEach(l=>l.classList.remove('on'));
+    document.getElementById('completionScreen').classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else { switchTo(ci+1); }
+}
+
+function markDone(ci){
+  doneSets[ci]=true;
+  refreshTabs();
+  updateProgress();
+}
+
+function updateProgress(){
+  const d=doneSets.filter(Boolean).length;
+  document.getElementById('topPF').style.width=(d/CHAPTERS.length*100)+'%';
+  document.getElementById('topLbl').textContent=`${d} / ${CHAPTERS.length} done`;
+}
+
+function restartAll(){
+  doneSets=[false,false,false,false];
+  currentChapter=0;
+  document.getElementById('completionScreen').classList.remove('on');
+  showLesson(0);refreshTabs();updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>    
+</html>  
